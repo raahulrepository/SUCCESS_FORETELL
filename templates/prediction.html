@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Business Success Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        .backdrop {
+            background-color: rgba(255, 255, 255, 0.85);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-8">
+    <!-- Top Navbar -->
+    <header class="w-full bg-gray-900 text-white px-6 py-4 flex justify-between items-center fixed top-0 left-0 z-50">
+      <!-- Logo / Title -->
+      <h1 class="text-2xl font-bold text-blue-500">Success Fortell</h1>
+  
+      <!-- Navigation Links -->
+      <nav class="flex justify-center space-x-16 text-xl relative">
+        <a href="{{ url_for('home') }}" class="text-lg hover:text-blue-400">Home</a>
+        <a href="{{ url_for('home') }}#about" class="text-lg hover:text-blue-400">About</a>
+        <a href="{{ url_for('home') }}#features" class="text-lg hover:text-blue-400">Features</a>
+        <a href="{{ url_for('home') }}#testimonials" class="text-lg hover:text-blue-400">Testimonials</a>
+        <a href="{{ url_for('home') }}#contactus" class="text-lg hover:text-blue-400">contact us</a>
+      
+        <!-- Profile Dropdown -->
+        <div class="relative inline-block text-left">
+            <!-- Hidden Checkbox Toggle -->
+            <input type="checkbox" id="profileToggle" class="hidden peer" />
+          
+            <!-- Label acts as the clickable toggle -->
+            <label for="profileToggle" class="cursor-pointer text-lg hover:text-blue-400 peer-checked:text-blue-400">
+              Profile
+            </label>
+          
+            <!-- Dropdown shown only when checkbox is checked -->
+            <div class="absolute right-0 mt-2 hidden peer-checked:block bg-white shadow-md rounded-md w-48 text-gray-800 z-20">
+              <div class="px-4 py-3 border-b border-gray-200">
+                <p class="text-sm font-semibold">successfortell@gmail.com</p>
+              </div>
+              <a href="{{ url_for('logout') }}" class="block px-4 py-2 hover:bg-gray-100">Logout</a>
+            </div>
+          </div>          
+      </nav>      
+    </header>
+  
+    <!-- Branding at the top -->
+    <div class="absolute top-20 text-center text-white drop-shadow-md">
+      <h1 class="text-5xl font-bold">Success Fortell</h1>
+      <p class="text-xl mt-2 italic">Grow exponentially with AI</p>
+    </div>
+    
+  <div class="backdrop max-w-2xl w-full p-8 rounded-lg shadow-lg">
+        <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Business Success Prediction</h2>
+        
+        <form method="POST" action="/predict" class="space-y-5">
+            <div>
+                <label for="location" class="block font-semibold text-gray-700">
+    Business City
+</label>
+
+<select id="location" name="location" required
+    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md">
+    <option value="">Select City</option>
+    <option value="1">Bhopal</option>
+    <option value="2">Indore</option>
+</select>
+            </div>
+        
+            <div>
+                <label for="tob" class="block font-semibold text-gray-700">
+    Type of Business
+</label>
+
+<select id="tob" name="tob" required
+    class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500">
+    <option value="">Select Business Type</option>
+    <option value="3">Restaurant</option>
+    <option value="4">Grocery Shop</option>
+</select>
+            </div>
+        
+            <div>
+                
+<div>
+    <label for="area" class="block font-semibold text-gray-700">
+        Business Location
+    </label>
+
+    <select id="area" name="area" required
+        class="w-full mt-1 px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500">
+        <option value="">First Select a City</option>
+    </select>
+</div>
+
+            </div>
+        
+            <div class="text-center">
+                <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 transition-all">
+                    Predict Success
+                </button>
+            </div>
+        </form>        
+    </div>
+
+<script>
+    const citySelect = document.getElementById("location");
+    const areaSelect = document.getElementById("area");
+
+    const cityAreas = {
+        "1": [
+            { value: "11", name: "MP Nagar" },
+            { value: "12", name: "New Market" },
+            { value: "13", name: "Arera Colony" },
+            { value: "14", name: "Kolar Road" },
+            { value: "15", name: "Bittan Market" },
+            { value: "16", name: "TT Nagar" },
+            { value: "17", name: "Hoshangabad Road" }
+        ],
+        "2": [
+            { value: "18", name: "Vijay Nagar" },
+            { value: "19", name: "Palasia" },
+            { value: "20", name: "Rajwada" },
+            { value: "21", name: "Bhawarkua" },
+            { value: "22", name: "Sudama Nagar" },
+            { value: "23", name: "Scheme No. 54" },
+            { value: "24", name: "Rau" }
+        ]
+    };
+
+    citySelect.addEventListener("change", function () {
+        areaSelect.innerHTML = "";
+
+        const areas = cityAreas[this.value] || [];
+
+        if (areas.length === 0) {
+            areaSelect.add(new Option("First Select a City", ""));
+            return;
+        }
+
+        areaSelect.add(new Option("Select Business Location", ""));
+
+        areas.forEach(function (area) {
+            areaSelect.add(new Option(area.name, area.value));
+        });
+    });
+</script>
+</body>
+</html>
+
